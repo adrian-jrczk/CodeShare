@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Post | CodeShare</title>
+	<link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="top-bar">
+		<a href="/" class="button b-big">HOME</a>
+		<a href="/my-code" class="button b-big">MY CODE</a>
+		<a href="/post" class="button b-big b-bright">POST</a>
+		<a href="/access-form" class="button b-big">ACCESS</a>
+		<a href="/api-view" class="button b-big">API</a>
+		<div class="log-container">
+			<form th:action="@{/logout}" method="post">
+				<span>Logged as: <span sec:authentication="name"></span>  </span>
+				<button type="submit" class="button">Log out</button>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			</form>
+		</div>
+	</div>
+	<button type="button" id="show-panel-button" class="button" onclick="showPanel()">&lt;</button>
+	<form th:action="@{/post}" th:object="${code}" method="post">
+		<div id="side-panel" class="panel p-side">
+			<div class="grid">
+				<span>Name:</span>
+				<input type="text" id="name" th:field="*{name}" placeholder="(no name)" required>
+				<span>Time restriction(min):</span>
+				<input type="text" id="time-restriction" th:field="*{minutesAllowed}" pattern="\d*" title="Numbers only" placeholder="0 (unrestricted)">			
+				<span>Views allowed:</span>
+				<input type="text" id="views-restriction" th:field="*{viewsAllowed}" pattern="\d*" title="Numbers only" placeholder="0 (unrestricted)">			
+				<span>Private:</span>
+				<input type="checkbox" id="private" name="setAsPrivate" th:checked="*{setAsPrivate}" >
+				<span>Editable:</span>
+				<input type="checkbox" id="editable" name="editable" th:checked="*{editable}">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+				<button type="submit" class="button b-bright">Post Code</button>
+			</div>			
+			<hr>
+			<div class="buttons-container">
+				<button type="button" class="button" onclick="hidePanel()" title="Hide panel">&gt;</button>
+				<button type="button" class="button" onclick="goTop()" title="Go to top">^</button>
+				<button type="button" class="button" onclick="clearOptions()">Clear options</button>
+				<button type="button" class="button" onclick="clearCode()">Clear code</button>
+			</div>
+		</div>
+		<div class="panel p-center-large code-container">
+			<textarea id="code-area" th:field="*{code}" placeholder="// write here" required></textarea>
+		</div>
+	</form>
+	<div id="response-box" th:unless="${response==null}">
+		<h1 th:text="${response.result}"></h1>
+		<p th:text="${response.message}"></p>
+		<p th:if="${response.result == 'Success!'}"><input type="text" id="uuid" class="uuid-field" readonly th:value="${response.uuid}"></p>
+		<div class="buttons-container">
+			<button type="button" class="button" onclick="closeResponseBox()">Close</button>
+			<button type="button" class="button" onclick="copyValue('uuid')">Copy UUID</button>
+			<form th:action="@{/access}" method="get">
+				<input type="hidden" name="uuid" readonly th:value="${response.uuid}">
+				<button type="submit" class="button b-bright">Go to</button>
+			</form>
+		</div>
+	</div>
+	<script src="/js/scripts.js"></script>
+</body>
+
+</html>

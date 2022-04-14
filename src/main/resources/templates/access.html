@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Access | CodeShare</title>
+	<link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="top-bar">
+		<a href="/" class="button b-big">HOME</a>
+		<a href="/my-code" class="button b-big">MY CODE</a>
+		<a href="/post" class="button b-big">POST</a>
+		<a href="/access-form" class="button b-big b-bright">ACCESS</a>
+		<a href="/api-view" class="button b-big">API</a>
+		<div class="log-container">
+			<form th:action="@{/logout}" method="post">
+				<span>Logged as: <span sec:authentication="name"></span>  </span>
+				<button type="submit" class="button">Log out</button>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			</form>
+		</div>
+	</div>
+	<button type="button" id="show-panel-button" class="button" onclick="showPanel()">&lt;</button>
+	<form th:action="@{/update}" th:object="${code}" th:method="post">
+		<div id="side-panel" class="panel p-side">
+			<div class="grid">
+				<span>Name:</span>
+				<input type="text" id="name" th:field="*{name}" readonly>
+				<span>Availability(min):</span>
+				<input th:if="*{timeRestricted}" type="text" th:field="*{minutesAllowed}" readonly>
+				<input th:unless="*{timeRestricted}" type="text" value="unrestricted" readonly>
+				<span>Views allowed:</span>
+				<input th:if="*{viewRestricted}" type="text" th:field="*{viewsAllowed}" readonly>
+				<input th:unless="*{viewRestricted}" type="text" value="unrestricted" readonly>
+				<span>Last modification:</span>
+				<span th:text="${#temporals.format(code.lastModified, 'HH:mm dd-MM-yyyy')}"></span>
+				<input type="hidden" th:field="*{uuid}">
+				<button type="submit" class="button b-bright" th:disabled="${!code.editable}">Update</button>							
+			</div>
+			<hr>
+			<div class="buttons-container">	
+				<button type="button" class="button" onclick="hidePanel()" title="Hide panel">&gt;</button>
+				<button type="button" class="button" onclick="copyValue('code-area')">Copy whole code</button> 
+				<button type="button" class="button" onclick="goTop()" title="Go to top">^</button> 
+			</div>
+		</div>
+		<div class="panel p-center-large code-container">
+			<textarea id="code-area" th:field="*{code}" th:readonly="${!code.editable}"></textarea>
+		</div>
+	</form>
+	<div id="response-box" th:unless="${response == null}">
+		<h1 th:text="${response.result}"></h1>
+		<p th:text="${response.message}"></p>
+		<button type="button" class="button" onclick="closeResponseBox()">Close</button>
+	</div>
+	<script src="/js/scripts.js"></script>
+</body>
+
+</html>

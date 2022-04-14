@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Access | CodeShare</title>
+	<link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="top-bar">
+		<a href="/" class="button b-big">HOME</a>
+		<a href="/my-code" class="button b-big">MY CODE</a>
+		<a href="/post" class="button b-big">POST</a>
+		<a href="/access-form" class="button b-big b-bright">ACCESS</a>
+		<a href="/api-view" class="button b-big">API</a>
+		<div class="log-container">
+			<form th:action="@{/logout}" method="post">
+				<span>Logged as: <span sec:authentication="name"></span>  </span>
+				<button type="submit" class="button">Log out</button>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			</form>
+		</div>
+	</div>
+	<div class="panel p-center-small">
+		<form th:action="@{/access}" method="get">
+			<h1>Access code</h1>
+			<div class="grid">
+				<span>Code uuid:</span>
+				<span><input type="text" th:name="uuid" class="uuid-field" placeholder="..."></span>
+			</div>
+			<p></p>
+			<button type="submit" class="button b-bright">Access</button>
+		</form>
+	</div>
+	<div id="response-box" th:unless="${response==null}">
+		<h1 th:text="${response.result}"></h1>
+		<p th:text="${response.message}"></p>
+		<button type="button" class="button" onclick="closeResponseBox()">OK</button>
+	</div>
+	<script src="/js/scripts.js"></script>
+</body>
+
+</html>

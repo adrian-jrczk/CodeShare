@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>My Code | CodeShare</title>
+	<link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="top-bar">
+		<a href="/" class="button b-big">HOME</a>
+		<a href="/my-code" class="button b-big b-bright">MY CODE</a>
+		<a href="/post" class="button b-big">POST</a>
+		<a href="/access-form" class="button b-big">ACCESS</a>
+		<a href="/api-view" class="button b-big">API</a>
+		<div class="log-container">
+			<form th:action="@{/logout}" method="post">
+				<span>Logged as: <span sec:authentication="name"></span>  </span>
+				<button type="submit" class="button">Log out</button>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			</form>
+		</div>
+	</div>
+	<div class="panel p-center-large" th:if="${codeList!=null and !codeList.empty}">
+		<h1>Code posted by you</h1>
+		<div class="table">
+			<div class="row">
+				<div class="cell c-header">Code Name</div>
+				<div class="cell c-header">Code Id</div>
+				<div class="cell c-header">Action</div>
+			</div>	
+			<div class="row" th:each="code : ${codeList}">
+				<div class="cell"><span th:text="${code.name}"></span></div>
+				<div class="cell"><input type="text" class="uuid-field" readonly th:value="${code.uuid}"></div>
+				<div class="cell">
+					<div class="buttons-container">
+						<form th:action="@{/delete}" method="post" onsubmit="return confirm('Do you really want to delete this code?');">
+							<button type="submit" class="button">Delete</button>
+							<input type="hidden" th:name="uuid" th:value="${code.uuid}">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+						</form>
+						<form th:action="@{/access}" method="get">
+							<input type="hidden" th:name="uuid" th:value="${code.uuid}">
+							<button type="submit" class="button b-bright">Access</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="page-nav-box">
+			<a th:if="${currentPage > 1}" th:href="@{/my-code/page=1}">First</a>
+			<span th:unless="${currentPage > 1}">First</span>
+			<a th:if="${currentPage > 1}" th:href="@{'/my-code/page=' + ${currentPage - 1}}">Previous</a>
+			<span th:unless="${currentPage > 1}">Previous</span>
+			<span>
+				<span th:each="i : ${#numbers.sequence(1, totalPages)}">
+					<a th:if="${i != currentPage}" th:href="@{'/my-code/page=' + ${i}}">[[${i}]]</a>
+					<span id="page-nav-curr" th:unless="${i != currentPage}">[[${i}]]</span>
+				</span>
+			</span>
+			<a th:if="${currentPage < totalPages}" th:href="@{'/my-code/page=' + ${currentPage + 1}}">Next</a>
+			<span th:unless="${currentPage < totalPages}">Next</span>
+			<a th:if="${currentPage < totalPages}" th:href="@{'/my-code/page=' + ${totalPages}}">Last</a>
+			<span th:unless="${currentPage < totalPages}">Last</span>
+		</div>
+	</div>
+	<div class="panel p-center-small" th:if="${codeList==null or codeList.empty}">
+		<h1>You have not posted any code</h1>	
+	</div>
+	<div id="response-box" th:unless="${response==null}">
+		<h1 th:text="${response.result}"></h1>
+		<p th:text="${response.message}"></p>
+		<button type="button" class="button" onclick="closeResponseBox()">OK</button>
+	</div>
+	<script src="/js/scripts.js"></script>
+</body>
+
+</html>
