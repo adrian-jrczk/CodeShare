@@ -9,7 +9,7 @@
   - [Accessing Code](#accessing-code)
   - [API](#api)
 - [Installation](#installation)
-- [Technologies used](#technnologies-used)
+- [Technologies used](#technologies-used)
 - [Screenshots](#screenshots)
 
 
@@ -19,12 +19,12 @@ CodeShare is a simple web service which main goal is to improve your workflow by
 
 ## Features
 
-- use this service with your browser or through API
-- post code with different types of restrictions
-- access other people's code/text with universally unique identifier (uuid)
-- edit posted code directly through browser if it's set as editable
-- store your private code with 'private' restriction ensuring nobody will access it 
-- easily access every code you posted
+- Use this service with your browser or through API
+- Post code with different types of restrictions
+- Access other people's code/text with universally unique identifier (uuid)
+- Edit posted code directly through browser if it's set as editable
+- Store your private code with 'private' restriction ensuring nobody will access it 
+- Easily access every code you posted
 
 ## Usage
 
@@ -41,7 +41,7 @@ After running this service with command line/terminal you can use it through bro
 - You can post code and set it's: name, number of views allowed, time availability, private and editable status
 - Name and code field must not be empty
 - Restrictions are optional
-- By default, code is set as non-editable
+- By default code is set as non-editable
 
 ### Accessing code
 
