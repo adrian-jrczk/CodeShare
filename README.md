@@ -1,12 +1,16 @@
 # CodeShare
 
 ## Table of contents
-* [About](#about)
-* [Features](#features)
-* [Usage](#usage)
-* [Installation](#installation)
-* [Technologies used](#technnologies-used)
-* [Screenshots](#screenshots)
+- [About](#about)
+- [Features](#features)
+- [Usage](#usage)
+  - [Registration](#registration)
+  - [Posting Code](#posting-code)
+  - [Accessing Code](#accessing-code)
+  - [API](#api)
+- [Installation](#installation)
+- [Technologies used](#technnologies-used)
+- [Screenshots](#screenshots)
 
 
 ## About
@@ -39,7 +43,7 @@ After running this service with command line/terminal you can use it through bro
 - Restrictions are optional
 - By default, code is set as non-editable
 
-### Accessing/editing code
+### Accessing code
 
 - To access code you need to have it's uuid
 - If you are code's creator you can also access it directly from my-code page
@@ -52,37 +56,39 @@ After running this service with command line/terminal you can use it through bro
 
 Every endpoint returns Response object. Apart from `/api/register` every request should be authenticated with username and password.
 
+#### Endpoints
+
 - /api/code
-	* Return code with given uuid
+	* Return code
 	* Request parameters: String uuid
 	* Request body: none
 
 - /api/post
-	* Post given code
+	* Post code
 	* Request parameters: none
 	* Request body: Code object
 
 - /api/delete
-	* Delete code with given uuid
+	* Delete code
 	* Request parameters: String uuid
 	* Request body: none
 
 - /api/update
-	* Update given code
+	* Update code
 	* Request parameters: none
 	* Request body: Code object
 
 - /api/my-code
-	* Return list of code posted by me
+	* Return list of code uuid's posted by me
 	* Request parameters: none
 	* Request body: none
 
 - /api/register
-	* Register given user
+	* Register user
 	* Request parameters: none
 	* Request body: User object
 
-#### API Objects:
+#### Objects:
 
 - Response
 	* String result
@@ -105,7 +111,7 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 
 ## Installation
 
-1. Import this repository to some folder with `git clone repourl`
+1. Import this repository to some folder with `git clone https://github.com/adrian-jrczk/CodeShare.git`
 2. Open this folder and install with `mvn clean install`
 3. In `target` folder there will be executable jar file `codeshare.jar` which you can move freely and run with `java -jar codeshare.jar`
 
@@ -120,10 +126,17 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 ## Screenshots
 
 ![screenshot 1](images/screenshot01.png?raw=true "Using service with browser 1")
+***
 ![screenshot 2](images/screenshot02.png?raw=true "Using service with browser 2")
+***
 ![screenshot 3](images/screenshot03.png?raw=true "Using service with browser 3")
+***
 ![screenshot 4](images/screenshot04.png?raw=true "Using service with browser 4")
+***
 ![screenshot 5](images/screenshot05.png?raw=true "Using service with browser 5")
+***
 ![screenshot 6](images/screenshot06.png?raw=true "Using service with browser 6")
+***
 ![screenshot 7](images/screenshot07.png?raw=true "Using service with browser 7")
+***
 ![screenshot 8](images/screenshot08.png?raw=true "Using service with browser 8")
