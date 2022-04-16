@@ -5,8 +5,9 @@
 - [Features](#features)
 - [Usage](#usage)
   - [Registration](#registration)
-  - [Posting Code](#posting-code)
-  - [Accessing Code](#accessing-code)
+  - [Posting code](#posting-code)
+  - [Accessing and updating code](#accessing-and-updating-code)
+  - [Deleting code](#deleting-code)
   - [API](#api)
 - [Installation](#installation)
 - [Technologies used](#technologies-used)
@@ -24,33 +25,36 @@ CodeShare is a simple web service which main goal is to improve your workflow by
 - Access other people's code/text with universally unique identifier (uuid)
 - Edit posted code directly through browser if it's set as editable
 - Store your private code with 'private' restriction ensuring nobody will access it 
-- Easily access every code you posted
+- Quickly access and manage every code you posted
 
 ## Usage
 
-After running this service with command line/terminal you can use it through browser (by default by opening `https://localhost:8389/` page) or through API.
+After running this service with command line you can use it through browser (by default by opening `https://localhost:8389/` page) or through API.
+By default, only home page and api page are accessible without logging in so in order to access all features you must be registered.
 
 ### Registration
 
-- In order to use this service you must be registered
-- By default, only home page and api page are accessible without logging in
-- To register you only need to specify your username and password
+- To register go to register page and specify your username and password.
 
 ### Posting code
 
-- You can post code and set it's: name, number of views allowed, time availability, private and editable status
-- Name and code field must not be empty
-- Restrictions are optional
-- By default code is set as non-editable
+- To post code go to post page and set code's: name, number of views allowed (0 unrestricted), time availability (0 unrestricted), private and editable status.
+- Name and code field must not be empty.
+- Restrictions are optional.
+- By default code is set as non-editable non-private.
+- After successful operation you will receive generated unique code.
 
-### Accessing code
+### Accessing and updating code
 
-- To access code you need to have it's uuid
-- If you are code's creator you can also access it directly from my-code page
-- If code is set as editable anyone with uuid can make changes and save them
-- If code is set as non-editable only it's creator can make changes
-- Code set as private can be accessed only by its creator
+- To access code go to access page and enter code's uuid.
+- If you are code's creator you can access it directly from my-code page.
+- If code is set as editable anyone registered can make changes and save them.
+- If code is set as non-editable it cannot be modified.
+- Code set as private can be accessed only by its creator.
 
+### Deleting code
+
+- To delete code go to my code page and press delete button next to chosen code uuid.
 
 ### API
 
@@ -58,35 +62,29 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 
 #### Endpoints
 
-- /api/code
-	* Return code
+- `/api/code` - returns code wrapped in Response object
 	* Request parameters: String uuid
 	* Request body: none
 
-- /api/post
-	* Post code
+- `/api/post` - posts code
 	* Request parameters: none
-	* Request body: Code object
+	* Request body: Code
 
-- /api/delete
-	* Delete code
+- `/api/delete` - deletes code
 	* Request parameters: String uuid
 	* Request body: none
 
-- /api/update
-	* Update code
+- `/api/update` - updates code
 	* Request parameters: none
-	* Request body: Code object
+	* Request body: Code
 
-- /api/my-code
-	* Return list of code uuid's posted by me
+- `/api/my-code` - returns list of all code uuid's posted by request sender
 	* Request parameters: none
 	* Request body: none
 
-- /api/register
-	* Register user
+- `/api/register` - registers user
 	* Request parameters: none
-	* Request body: User object
+	* Request body: User
 
 #### Objects:
 
@@ -97,16 +95,16 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 	* Code code
 
 - Code
-	* String name (required)
-	* String code (required)
+	* String name
+	* String code
 	* boolean setAsPrivate
 	* boolean editable
 	* int viewsAllowed
 	* long minutesAllowed
 
 - User
-	* String name (required)
-	* String password (required)
+	* String name
+	* String password
 
 
 ## Installation
@@ -125,18 +123,18 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 
 ## Screenshots
 
-![screenshot 1](images/screenshot01.png?raw=true "Using service with browser 1")
+![screenshot 1](images/screenshot01.png?raw=true "Login page")
 ***
-![screenshot 2](images/screenshot02.png?raw=true "Using service with browser 2")
+![screenshot 2](images/screenshot02.png?raw=true "My code page")
 ***
-![screenshot 3](images/screenshot03.png?raw=true "Using service with browser 3")
+![screenshot 3](images/screenshot03.png?raw=true "Post page")
 ***
-![screenshot 4](images/screenshot04.png?raw=true "Using service with browser 4")
+![screenshot 4](images/screenshot04.png?raw=true "Post page side panel behavior")
 ***
-![screenshot 5](images/screenshot05.png?raw=true "Using service with browser 5")
+![screenshot 5](images/screenshot05.png?raw=true "Post page side panel hidden")
 ***
-![screenshot 6](images/screenshot06.png?raw=true "Using service with browser 6")
+![screenshot 6](images/screenshot06.png?raw=true "Post page posting code response")
 ***
-![screenshot 7](images/screenshot07.png?raw=true "Using service with browser 7")
+![screenshot 7](images/screenshot07.png?raw=true "My code page with many code entries")
 ***
-![screenshot 8](images/screenshot08.png?raw=true "Using service with browser 8")
+![screenshot 8](images/screenshot08.png?raw=true "Access code entry page")
