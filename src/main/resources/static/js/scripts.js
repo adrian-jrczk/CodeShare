@@ -1,27 +1,26 @@
 
-const codeArea = document.getElementById("code-area");
-if (codeArea != null) {
-	codeArea.setAttribute("style", "height:" + (codeArea.offsetHeight) + "px");
-	codeArea.addEventListener("input", adjustHeight, false);
+function switchSyntaxSupport() {
+	if (document.getElementById('syntax-checkbox').checked) {
+		var extension = document.getElementById('syntax-id').value;
+		var fileName = "file" + extension;
+		var mode = ace.require("ace/ext/modelist").getModeForPath(fileName).mode;
+		editor.getSession().setMode(mode);
+	} else {
+		editor.session.setMode("ace/mode/text");
+	}
 }
 
-function adjustHeight() {
-	this.style.height = "auto";
-	this.style.height = this.scrollHeight + "px";
+function extractCodeFromEditor() {
+	document.getElementById('code').value = editor.getValue();
+	return true;
 }
 
-function clearOptions() {
+function resetOptions() {
 	document.getElementById("name").value = "";
 	document.getElementById("time-restriction").value = "";
 	document.getElementById("views-restriction").value = "";
 	document.getElementById("private").checked = false;
 	document.getElementById("editable").checked = false;
-}
-
-function clearCode() {
-	document.getElementById("code-area").value = "";
-	document.getElementById("code-area").style.width = "1100px";
-	document.getElementById("code-area").style.height = "730px";
 }
 
 function hidePanel() {
@@ -34,8 +33,12 @@ function showPanel() {
 	document.getElementById("side-panel").style.display = "block";
 }
 
-function copyValue(elementId) {
-	 navigator.clipboard.writeText(document.getElementById(elementId).value);
+function copyUUIDToClipboard() {
+	 navigator.clipboard.writeText(document.getElementById('uuid').value);
+}
+
+function copyCodeToClipboard() {
+	 navigator.clipboard.writeText(editor.getValue());
 }
 
 function goTop() {

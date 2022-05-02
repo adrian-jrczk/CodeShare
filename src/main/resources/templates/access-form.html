@@ -14,7 +14,6 @@
 		<a href="/my-code" class="button b-big">MY CODE</a>
 		<a href="/post" class="button b-big">POST</a>
 		<a href="/access-form" class="button b-big b-bright">ACCESS</a>
-		<a href="/api-view" class="button b-big">API</a>
 		<div class="log-container">
 			<form th:action="@{/logout}" method="post">
 				<span>Logged as: <span sec:authentication="name"></span>  </span>
@@ -31,7 +30,7 @@
 				<span><input type="text" th:name="uuid" class="uuid-field" placeholder="..."></span>
 			</div>
 			<p></p>
-			<button type="submit" class="button b-bright">Access</button>
+			<button type="submit" class="button b-bright">ACCESS</button>
 		</form>
 	</div>
 	<div id="response-box" th:unless="${response==null}">

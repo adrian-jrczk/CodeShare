@@ -92,11 +92,6 @@ public class ViewController {
         return "access-form";
     }
 
-    @GetMapping("/api-view")
-    private String apiPage() {
-        return "api";
-    }
-
     @GetMapping("/access")
     private String accessPage(@RequestParam(name = "uuid") String uuid, Model model, Principal principal) {
         Response response = service.getCode(uuid, principal.getName());

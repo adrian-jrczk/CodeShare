@@ -7,15 +7,16 @@
 	--grey: #303030;
 	--purple-light: #7b78bd;
 	--lavender: #c1c6ff;
-	--lavender-greyed: #777777;
 	--lavender-dark: #53536f;	
 }
 
 body * {
-	font-size: 16px;
+	font-family: 'Lucida Console', 'Courier', monospace;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
 	color: var(--creamy);
-	font-family: Arial;
-	font-weight: 500;
 }
 
 body {
@@ -25,7 +26,8 @@ body {
 }
 
 h1 {
-	font-size: 20px;
+	font-size: 16px;
+	font-weight: bold;
 	text-align: center;
 }
 
@@ -45,7 +47,7 @@ h1 {
 	background-color: var(--black-light-1);
 	cursor: pointer;
 	padding: 8px;
-	font-weight: 600;
+	font-weight: bold;
 }
 
 .b-bright {
@@ -55,16 +57,11 @@ h1 {
 
 .b-big {
 	margin: 5px 10px;
-	font-size: 20px;
+	font-size: 16px;
 }
 
 .button:hover {
 	box-shadow: 0 0 10px 3px var(--purple-light);
-}
-
-.button:disabled {
-	background-color: var(--lavender-greyed);
-	color: var(--grey);
 }
 
 #top-bar {
@@ -72,7 +69,7 @@ h1 {
 	position: fixed;
 	left: 0;
 	top: 0;
-	height: 50px;
+	height: 45px;
 	width: 100%;
 	background-color: var(--black-pure);
 	display: flex; 
@@ -82,7 +79,7 @@ h1 {
 
 .log-container {
 	min-width: 100px;
-	height: 40px;
+	height: 35px;
 	margin: 0 20px;
 	padding: 0 15px;
 	display: flex;
@@ -104,6 +101,14 @@ hr {
 	color: var(--lavender-dark);
 }
 
+.vertical-space {
+	height: 10px;
+}
+
+.horizontal-space {
+	width: 8px;
+}
+
 .table {
 	margin: 20px auto;
 	display: table;
@@ -118,6 +123,7 @@ hr {
 .cell {
 	display: table-cell;
 	text-align: left;
+	white-space: nowrap;
 	padding: 6px;
 	vertical-align: middle;
 	border: 1px solid var(--lavender-dark);
@@ -126,11 +132,11 @@ hr {
 
 .c-header {
 	text-align: center;
-	font-size: 18px;
 	font-weight: bold;
 }
 
 #show-panel-button {
+	z-index: 100;
 	position: fixed;
 	top: 50%;
 	right: 20px;
@@ -153,6 +159,7 @@ hr {
 	top: 50%;
 	right: 0;
 	transform: translateY(-50%);
+	padding-left: 15px;
 }
 
 .p-center-small {
@@ -165,8 +172,9 @@ hr {
 
 .p-center-large {
 	display: inline-block;
-	width: 700px;
-	min-height: 250px;
+	padding: 10px;
+	min-width: 600px;
+	min-height: 220px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 70px;
@@ -185,14 +193,14 @@ hr {
 	align-items: center;
 }
 
-#code-area:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="checkbox"]:hover {
+.grid div {
+	align-items: left;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="checkbox"]:hover {
 	outline: none;
 	box-shadow: 0 0 5px 2px var(--purple-light);
 	background-color: var(--black-light-1);
-}
-
-.code-container {
-	width: auto;
 }
 
 .uuid-field {
@@ -200,23 +208,9 @@ hr {
 	text-align: center;
 }
 
-#code-area {
-	max-width: 1100px;
-	min-width: 1100px;
-	min-height: 730px;
-	height: 730px;
-	padding: 5px;
-	white-space: pre;
-	border: none;
-	border-radius: 5px;
-	background-color: var(--black-light-2);
-	overflow-y: hidden;
-	resize: none;
-}
-
-.large-text-container {
-	background-color: var(--black-light-2);
-	padding: 5px;
+.text-only-container {
+	max-width: 560px;
+	padding: 10px;
 	text-align: left;
 }
 
@@ -255,7 +249,7 @@ input[type="checkbox"]:checked {
 	text-align: center;
 }
 
-#page-nav-box {
+#page-nav-container {
 	min-width: 400px;
 	max-width: 500px;
 	display: flex;
@@ -264,4 +258,39 @@ input[type="checkbox"]:checked {
 	padding: 10px;
 	border: 1px solid var(--purple-light);
 	border-radius: 15px;
+}
+
+#editor {
+	position: relative;
+	width: 1100px;
+	max-width: 1100px;
+	min-width: 1100px;
+	height: 730px;
+	min-height: 730px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 70px;
+	font-size: 14px !important;
+	direction:ltr !important;
+	text-align:left !important;
+	font-style: normal;
+	font-variant-caps: normal;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: normal;
+	font-family: 'Lucida Console', 'Courier', monospace !important;
+	font-size-adjust: none;
+	font-kerning: auto;
+	font-optical-sizing: auto;
+	font-variant-alternates: normal;
+	font-variant-east-asian: normal;
+	font-variant-ligatures: normal;
+	font-variant-numeric: normal;
+	font-variant-position: normal;
+	font-language-override: normal;
+	font-feature-settings: normal;
+	font-variation-settings: normal;
+	border-radius: 5px;
+	box-shadow: 0 0 5px 2px var(--black);
+	padding: 10px;
 }

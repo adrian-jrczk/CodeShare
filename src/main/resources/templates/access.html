@@ -9,12 +9,12 @@
 </head>
 
 <body>
+
 	<div id="top-bar">
 		<a href="/" class="button b-big">HOME</a>
 		<a href="/my-code" class="button b-big">MY CODE</a>
 		<a href="/post" class="button b-big">POST</a>
 		<a href="/access-form" class="button b-big b-bright">ACCESS</a>
-		<a href="/api-view" class="button b-big">API</a>
 		<div class="log-container">
 			<form th:action="@{/logout}" method="post">
 				<span>Logged as: <span sec:authentication="name"></span>  </span>
@@ -23,9 +23,11 @@
 			</form>
 		</div>
 	</div>
-	<button type="button" id="show-panel-button" class="button" onclick="showPanel()">&lt;</button>
-	<form th:action="@{/update}" th:object="${code}" th:method="post">
+	
+	<form th:action="@{/update}" th:object="${code}" th:method="post" onsubmit="return extractCodeFromEditor()">
+	
 		<div id="side-panel" class="panel p-side">
+		
 			<div class="grid">
 				<span>Name:</span>
 				<input type="text" id="name" th:field="*{name}" readonly>
@@ -37,25 +39,53 @@
 				<input th:unless="*{viewRestricted}" type="text" value="unrestricted" readonly>
 				<span>Last modification:</span>
 				<span th:text="${#temporals.format(code.lastModified, 'HH:mm dd-MM-yyyy')}"></span>
-				<input type="hidden" th:field="*{uuid}">
-				<button type="submit" class="button b-bright" th:disabled="${!code.editable}">Update</button>							
+				<input type="hidden" th:field="*{uuid}">							
 			</div>
+			
 			<hr>
-			<div class="buttons-container">	
-				<button type="button" class="button" onclick="hidePanel()" title="Hide panel">&gt;</button>
-				<button type="button" class="button" onclick="copyValue('code-area')">Copy whole code</button> 
-				<button type="button" class="button" onclick="goTop()" title="Go to top">^</button> 
+			
+			<div class="grid">
+				<span title="Set syntax support by language file extension, example: .java">Syntax ID:</span>
+				<input type="text" id="syntax-id" placeholder=".txt">
+				<span>Syntax support:</span>
+				<input type="checkbox" id="syntax-checkbox" onchange="switchSyntaxSupport()">
+			</div>
+			
+			<hr>
+			
+			<div class="buttons-container">
+				<button th:if="*{editable}" type="submit" class="button b-bright">UPDATE</button>
+				<button type="button" class="button" onclick="hidePanel()" title="Hide this panel">Hide</button>
+				<button type="button" class="button" onclick="goTop()" title="Go to the top of the page">Up</button>
+				<button type="button" class="button" onclick="copyCodeToClipboard()">Copy all</button> 
 			</div>
 		</div>
-		<div class="panel p-center-large code-container">
-			<textarea id="code-area" th:field="*{code}" th:readonly="${!code.editable}"></textarea>
+		
+		<button type="button" id="show-panel-button" class="button" onclick="showPanel()">&lt;</button>
+		
+		<div>
+			<div id="editor"></div>
+			<input type="hidden" id="code" th:field="*{code}">
 		</div>
 	</form>
+	
+	
 	<div id="response-box" th:unless="${response == null}">
 		<h1 th:text="${response.result}"></h1>
 		<p th:text="${response.message}"></p>
 		<button type="button" class="button" onclick="closeResponseBox()">Close</button>
 	</div>
+	
+	<script src="/ace-editor/src-min-noconflict/ace.js"></script>
+	<script src="/ace-editor/src-min-noconflict/ext-modelist.js"></script>
+	<script>
+		const editor = ace.edit("editor");
+		editor.setTheme("ace/theme/twilight");
+		editor.setOptions({
+			maxLines: 10000
+		});
+		editor.session.setValue(document.getElementById('code').value);
+	</script>
 	<script src="/js/scripts.js"></script>
 </body>
 
