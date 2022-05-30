@@ -104,7 +104,7 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 ## Installation
 
 1. Import this repository to some folder with `git clone https://github.com/adrian-jrczk/CodeShare.git`
-2. Open this folder and install with `mvn clean install`
+2. Open this folder and install with `mvn clean package`
 3. In `target` folder there will be executable jar file `codeshare.jar` which you can move freely and run with `java -jar codeshare.jar`
 
 The first time you run this program, it creates .codeshare folder (containing database file) inside your home directory.
