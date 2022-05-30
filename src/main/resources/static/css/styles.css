@@ -1,13 +1,18 @@
-:root {
-	--creamy: #cccccc;
-	--black: #171717;
-	--black-pure: #000000;
-	--black-light-1: #222222; 
-	--black-light-2: #181818; 
-	--grey: #303030;
-	--purple-light: #7b78bd;
-	--lavender: #c1c6ff;
-	--lavender-dark: #53536f;	
+
+body {
+	--bkg-color: #303030;
+	--text-color: #cccccc;
+	--text-color-inverted: #171717;
+	--shadow-color: #171717;
+	--cell-bkg-color: #171717;
+	--panel-bkg-color: #000000;
+	--input-bkg-color: #1B1B1B;
+	--input-checked-bkg-color: #313131;
+	--input-focus-color: #222222;
+	--button-bkg-color: #313131;
+	--button-bright-bkg-color: #c1c6ff;
+	--highlight-color: #7b78bd;
+	--hr-color: #53536f;
 }
 
 body * {
@@ -16,11 +21,11 @@ body * {
 	font-style: normal;
 	font-variant: normal;
 	font-weight: normal;
-	color: var(--creamy);
+	color: var(--text-color);
 }
 
 body {
-	background-color: var(--grey);
+	background-color: var(--bkg-color);
 	padding-bottom: 20px;
 	text-align: center;
 }
@@ -44,15 +49,15 @@ h1 {
 	text-decoration: none;
 	border: none;
 	border-radius: 5px;
-	background-color: var(--black-light-1);
+	background-color: var(--button-bkg-color);
 	cursor: pointer;
 	padding: 8px;
 	font-weight: bold;
 }
 
 .b-bright {
-	background-color: var(--lavender);
-	color: var(--black);
+	background-color: var(--button-bright-bkg-color);
+	color: var(--text-color-inverted);
 }
 
 .b-big {
@@ -61,7 +66,7 @@ h1 {
 }
 
 .button:hover {
-	box-shadow: 0 0 10px 3px var(--purple-light);
+	box-shadow: 0 0 10px 3px var(--highlight-color);
 }
 
 #top-bar {
@@ -71,7 +76,7 @@ h1 {
 	top: 0;
 	height: 45px;
 	width: 100%;
-	background-color: var(--black-pure);
+	background-color: var(--panel-bkg-color);
 	display: flex; 
 	justify-content: center;
 	align-items: center;
@@ -87,18 +92,18 @@ h1 {
 	border: none;
 	border-radius: 15px;
 	align-items: center;
-	background-color: var(--black-light-1);
+	background-color: var(--button-bkg-color);
 }
 
 .lc-bright, .lc-bright span {
-	background-color: var(--lavender);
-	color: var(--black);
+	background-color: var(--button-bright-bkg-color);
+	color: var(--text-color-inverted);
 }
 
 hr {
 	margin-top: 20px;
 	margin-bottom: 20px;
-	color: var(--lavender-dark);
+	color: var(--hr-color);
 }
 
 .vertical-space {
@@ -126,8 +131,8 @@ hr {
 	white-space: nowrap;
 	padding: 6px;
 	vertical-align: middle;
-	border: 1px solid var(--lavender-dark);
-	background-color: var(--black);
+	border: 1px solid var(--hr-color);
+	background-color: var(--cell-bkg-color);
 }
 
 .c-header {
@@ -141,16 +146,16 @@ hr {
 	top: 50%;
 	right: 20px;
 	font-size: 22px;
-	background-color: var(--black-pure);
+	background-color: var(--panel-bkg-color);
 	display: none;
 }
 
 .panel {
 	z-index: 10;
-	background-color: var(--black-pure);	
+	background-color: var(--panel-bkg-color);	
 	border-radius: 5px;
 	text-align: center;
-	box-shadow: 0 0 5px 2px var(--black);
+	box-shadow: 0 0 5px 2px var(--shadow-color);
 	padding: 10px;
 }
 
@@ -199,8 +204,8 @@ hr {
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="checkbox"]:hover {
 	outline: none;
-	box-shadow: 0 0 5px 2px var(--purple-light);
-	background-color: var(--black-light-1);
+	box-shadow: 0 0 5px 2px var(--highlight-color);
+	background-color: var(--input-focus-color);
 }
 
 .uuid-field {
@@ -215,8 +220,8 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="checkbox"]:h
 }
 
 input {
-	background-color: var(--black-light-2);
-	border: 1px solid var(--black-pure);
+	background-color: var(--input-bkg-color);
+	border: 1px solid var(--input-bkg-color);
 	border-radius: 5px;
 	padding: 2px;
 }
@@ -225,23 +230,23 @@ input[type="checkbox"] {
 	appearance: none;
 	width: 24px;
 	margin-left: 0;
-	border: 1px solid var(--black-pure);
+	border: 1px solid var(--input-bkg-color);
 	border-radius: 5px;
-	background-color: var(--black-light-1);
+	background-color: var(--input-bkg-color);
 	padding: 2px;
 }
 
 input[type="checkbox"]:checked {
-	background-color: var(--lavender);
+	background-color: var(--input-checked-bkg-color);
 }
 
 #response-box { 
 	z-index: 20;
 	position: fixed;
-	background-color: var(--black-pure);
-	border: 1px solid var(--purple-light);
+	background-color: var(--panel-bkg-color);
+	border: 1px solid var(--highlight-color);
 	border-radius: 5px;
-	box-shadow: 0 0 5px 2px var(--purple-light);
+	box-shadow: 0 0 5px 2px var(--highlight-color);
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -256,7 +261,7 @@ input[type="checkbox"]:checked {
 	justify-content: space-around;
 	margin: 40px auto 0;
 	padding: 10px;
-	border: 1px solid var(--purple-light);
+	border: 1px solid var(--highlight-color);
 	border-radius: 15px;
 }
 
@@ -291,6 +296,6 @@ input[type="checkbox"]:checked {
 	font-feature-settings: normal;
 	font-variation-settings: normal;
 	border-radius: 5px;
-	box-shadow: 0 0 5px 2px var(--black);
+	box-shadow: 0 0 5px 2px var(--shadow-color);
 	padding: 10px;
 }
