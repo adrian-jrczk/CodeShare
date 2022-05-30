@@ -144,7 +144,7 @@ class AppService {
         if (!UserValidator.isValid(user)) {
             return new Response().setResult("Failure!").setMessage(UserValidator.REQUIREMENTS);
         }
-        if (userRepository.existsById(user.getId())) {
+        if (userRepository.existsByName(user.getName())) {
             return new Response().setResult("Failure!").setMessage("This username is already taken.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
