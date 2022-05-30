@@ -92,7 +92,7 @@ class AppService {
 
     @Transactional
     Response deleteCode(String uuid, String principalName) {
-        Optional<User> databaseUser = userRepository.findById(principalName);
+        Optional<User> databaseUser = userRepository.findFirstByName(principalName);
         if (databaseUser.isEmpty()) {
             return new Response().setResult("Failure!").setMessage("Could not validate user sending request.");
         }
@@ -111,7 +111,7 @@ class AppService {
         if (!CodeValidator.isValid(code)) {
             return new Response().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
         }
-        Optional<User> optionalUser = userRepository.findById(principalName);
+        Optional<User> optionalUser = userRepository.findFirstByName(principalName);
         if (optionalUser.isEmpty()) {
             return new Response().setResult("Failure!").setMessage("Could not authenticate user");
         }
@@ -144,7 +144,7 @@ class AppService {
         if (!UserValidator.isValid(user)) {
             return new Response().setResult("Failure!").setMessage(UserValidator.REQUIREMENTS);
         }
-        if (userRepository.existsById(user.getName())) {
+        if (userRepository.existsById(user.getId())) {
             return new Response().setResult("Failure!").setMessage("This username is already taken.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));

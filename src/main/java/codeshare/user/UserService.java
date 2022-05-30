@@ -15,7 +15,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        codeshare.user.User user = userRepository.findById(userName)
+        codeshare.user.User user = userRepository.findFirstByName(userName)
                                                 .orElseThrow(() -> new UsernameNotFoundException(userName + " not found."));
         return User.withUsername(user.getName()).password(user.getPassword()).authorities("ROLE_USER").build();
     }
