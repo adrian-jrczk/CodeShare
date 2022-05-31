@@ -47,5 +47,5 @@ function goTop() {
 } 
 
 function closeResponseBox() {
-	document.getElementById("response-box").style.display = "none";
+	document.getElementById("serviceResponse-box").style.display = "none";
 }

@@ -6,29 +6,29 @@ import lombok.Getter;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Response {
+public class ServiceResponse {
 
     private String result;
     private String message;
     private String uuid;
     private Code code;
 
-    public Response setResult(String result) {
+    public ServiceResponse setResult(String result) {
         this.result = result;
         return this;
     }
 
-    public Response setMessage(String message) {
+    public ServiceResponse setMessage(String message) {
         this.message = message;
         return this;
     }
 
-    public Response setUuid(String uuid) {
+    public ServiceResponse setUuid(String uuid) {
         this.uuid = uuid;
         return this;
     }
 
-    public Response setCode(Code code) {
+    public ServiceResponse setCode(Code code) {
         this.code = code;
         return this;
     }

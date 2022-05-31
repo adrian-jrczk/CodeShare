@@ -69,9 +69,9 @@
 	<div class="panel p-center-small" th:if="${codeList==null or codeList.empty}">
 		<h1>You have not posted any code</h1>	
 	</div>
-	<div id="response-box" th:unless="${response==null}">
-		<h1 th:text="${response.result}"></h1>
-		<p th:text="${response.message}"></p>
+	<div id="serviceResponse-box" th:unless="${serviceResponse==null}">
+		<h1 th:text="${serviceResponse.result}"></h1>
+		<p th:text="${serviceResponse.message}"></p>
 		<button type="button" class="button" onclick="closeResponseBox()">OK</button>
 	</div>
 	<script src="/js/scripts.js"></script>

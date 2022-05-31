@@ -52,11 +52,11 @@ By default, only home page is accessible without logging in so in order to acces
 
 ### API
 
-Every endpoint returns Response object. Apart from `/api/register` every request should be authenticated with username and password.
+Every endpoint returns ServiceResponse object. Apart from `/api/register` every request should be authenticated with username and password.
 
 #### Endpoints
 
-- `/api/code` - returns code wrapped in Response object
+- `/api/code` - returns code wrapped in ServiceResponse object
 	* Request parameters: String uuid
 	* Request body: none
 
@@ -82,7 +82,7 @@ Every endpoint returns Response object. Apart from `/api/register` every request
 
 #### Objects:
 
-- Response
+- ServiceResponse
 	* String result
 	* String message
 	* String uuid

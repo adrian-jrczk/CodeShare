@@ -2,7 +2,7 @@ package codeshare.controller;
 
 import codeshare.code.Code;
 import codeshare.service.AppService;
-import codeshare.service.Response;
+import codeshare.service.ServiceResponse;
 import codeshare.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,22 +18,22 @@ public class ApiController {
     private AppService service;
 
     @GetMapping("/code")
-    private Response getCode(@RequestParam(name = "uuid") String uuid, Principal principal) {
+    private ServiceResponse getCode(@RequestParam(name = "uuid") String uuid, Principal principal) {
         return service.getCode(uuid, principal.getName());
     }
 
     @PostMapping("/post")
-    private Response postCode(@RequestBody Code code, Principal principal) {
+    private ServiceResponse postCode(@RequestBody Code code, Principal principal) {
         return service.saveCode(code, principal.getName());
     }
 
     @DeleteMapping("/delete")
-    private Response deleteCode(@RequestParam(name = "uuid") String uuid, Principal principal) {
+    private ServiceResponse deleteCode(@RequestParam(name = "uuid") String uuid, Principal principal) {
         return service.deleteCode(uuid, principal.getName());
     }
 
     @PutMapping("/update")
-    private Response updateCode(@RequestBody Code code, Principal principal) {
+    private ServiceResponse updateCode(@RequestBody Code code, Principal principal) {
         return service.updateCode(code, principal.getName());
     }
 
@@ -43,7 +43,7 @@ public class ApiController {
     }
 
     @PostMapping("/register")
-    private Response registerUser(@RequestBody User user) {
+    private ServiceResponse registerUser(@RequestBody User user) {
         return service.saveUser(user);
     }
 }

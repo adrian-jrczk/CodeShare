@@ -68,15 +68,15 @@
 		</div>
 	</form>
 	
-	<div id="response-box" th:unless="${response==null}">
-		<h1 th:text="${response.result}"></h1>
-		<p th:text="${response.message}"></p>
-		<p th:if="${response.result == 'Success!'}"><input type="text" id="uuid" class="uuid-field" readonly th:value="${response.uuid}"></p>
+	<div id="serviceResponse-box" th:unless="${serviceResponse==null}">
+		<h1 th:text="${serviceResponse.result}"></h1>
+		<p th:text="${serviceResponse.message}"></p>
+		<p th:if="${serviceResponse.result == 'Success!'}"><input type="text" id="uuid" class="uuid-field" readonly th:value="${serviceResponse.uuid}"></p>
 		<div class="buttons-container">
 			<button type="button" class="button" onclick="closeResponseBox()">Close</button>
 			<button type="button" class="button" onclick="copyUUIDToClipboard()">Copy UUID</button>
 			<form th:action="@{/access}" method="get">
-				<input type="hidden" name="uuid" readonly th:value="${response.uuid}">
+				<input type="hidden" name="uuid" readonly th:value="${serviceResponse.uuid}">
 				<button type="submit" class="button b-bright">Go to</button>
 			</form>
 		</div>

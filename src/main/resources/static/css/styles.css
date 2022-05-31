@@ -240,7 +240,7 @@ input[type="checkbox"]:checked {
 	background-color: var(--input-checked-bkg-color);
 }
 
-#response-box { 
+#serviceResponse-box {
 	z-index: 20;
 	position: fixed;
 	background-color: var(--panel-bkg-color);

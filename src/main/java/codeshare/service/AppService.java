@@ -29,38 +29,38 @@ public class AppService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Response updateCode(Code code, String principalName) {
+    public ServiceResponse updateCode(Code code, String principalName) {
         if (!CodeValidator.isValid(code)) {
-            return new Response().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
+            return new ServiceResponse().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
         }
         Optional<Code> databaseCode = codeRepository.findById(code.getUuid());
         if (databaseCode.isEmpty()) {
-            return new Response().setResult("Failure!").setMessage("Could not find given code.");
+            return new ServiceResponse().setResult("Failure!").setMessage("Could not find given code.");
         }
         Code modified = databaseCode.get();
         if (!modified.isEditable() && !modified.getCreator().getName().equals(principalName)) {
-            return new Response().setResult("Failure!").setMessage("You cannot edit this code.");
+            return new ServiceResponse().setResult("Failure!").setMessage("You cannot edit this code.");
         }
         modified.setStringValue(code.getStringValue());
         modified.setLastModified(LocalDateTime.now());
         codeRepository.save(modified);
-        return new Response().setResult("Success!").setMessage("This code was successfully updated.");
+        return new ServiceResponse().setResult("Success!").setMessage("This code was successfully updated.");
     }
 
     @Transactional
-    public Response getCode(String uuid, String principalName) {
+    public ServiceResponse getCode(String uuid, String principalName) {
         Optional<Code> databaseCode = codeRepository.findById(UUID.fromString(uuid));
         if (databaseCode.isEmpty()) {
-            return new Response().setResult("Failure!").setMessage("Could not find code with given uuid");
+            return new ServiceResponse().setResult("Failure!").setMessage("Could not find code with given uuid");
         }
         Code code = databaseCode.get();
         if (code.isSetAsPrivate() && !code.getCreator().getName().equals(principalName)) {
-            return new Response().setResult("Failure!").setMessage("You cannot access this code.");
+            return new ServiceResponse().setResult("Failure!").setMessage("You cannot access this code.");
         }
         if (code.isViewRestricted()) {
             if (code.getViewsAllowed() < 1) {
                 codeRepository.delete(code);
-                return new Response().setResult("Failure!").setMessage("This code has no more views allowed");
+                return new ServiceResponse().setResult("Failure!").setMessage("This code has no more views allowed");
             }
             code.setViewsAllowed(code.getViewsAllowed() - 1);
         }
@@ -68,11 +68,11 @@ public class AppService {
             code.setMinutesAllowed(code.getMinutesAllowed() - Duration.between(code.getCreatedAt(), LocalDateTime.now()).toMinutes());
             if (code.getMinutesAllowed() < 1) {
                 codeRepository.delete(code);
-                return new Response().setResult("Failure!").setMessage("This code is expired");
+                return new ServiceResponse().setResult("Failure!").setMessage("This code is expired");
             }
         }
         codeRepository.save(code);
-        return new Response().setResult("Success!").setCode(code);
+        return new ServiceResponse().setResult("Success!").setCode(code);
     }
 
     @Transactional
@@ -91,29 +91,29 @@ public class AppService {
     }
 
     @Transactional
-    public Response deleteCode(String uuid, String principalName) {
+    public ServiceResponse deleteCode(String uuid, String principalName) {
         Optional<User> databaseUser = userRepository.findFirstByName(principalName);
         if (databaseUser.isEmpty()) {
-            return new Response().setResult("Failure!").setMessage("Could not validate user sending request.");
+            return new ServiceResponse().setResult("Failure!").setMessage("Could not validate user sending request.");
         }
         User user = databaseUser.get();
         Code code = codeRepository.getReferenceById(UUID.fromString(uuid));
         if (!code.getCreator().getName().equals(user.getName())) {
-            return new Response().setResult("Failure!").setMessage("You are not allowed to delete this code.");
+            return new ServiceResponse().setResult("Failure!").setMessage("You are not allowed to delete this code.");
         }
         user.getCodeList().remove(code);
         userRepository.save(user);
-        return new Response().setResult("Success!").setMessage("Code was successfully deleted.");
+        return new ServiceResponse().setResult("Success!").setMessage("Code was successfully deleted.");
     }
 
     @Transactional
-    public Response saveCode(Code code, String principalName) {
+    public ServiceResponse saveCode(Code code, String principalName) {
         if (!CodeValidator.isValid(code)) {
-            return new Response().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
+            return new ServiceResponse().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
         }
         Optional<User> optionalUser = userRepository.findFirstByName(principalName);
         if (optionalUser.isEmpty()) {
-            return new Response().setResult("Failure!").setMessage("Could not authenticate user");
+            return new ServiceResponse().setResult("Failure!").setMessage("Could not authenticate user");
         }
         User user = optionalUser.get();
         code.setCreator(user);
@@ -127,21 +127,21 @@ public class AppService {
             code.setTimeRestricted(true);
         }
         codeRepository.save(code);
-        return new Response().setResult("Success!")
+        return new ServiceResponse().setResult("Success!")
                 .setMessage("Code was successfully posted. Generated uuid is:")
                 .setUuid(code.getUuid().toString());
     }
 
     @Transactional
-    public Response saveUser(User user) {
+    public ServiceResponse saveUser(User user) {
         if (!UserValidator.isValid(user)) {
-            return new Response().setResult("Failure!").setMessage(UserValidator.REQUIREMENTS);
+            return new ServiceResponse().setResult("Failure!").setMessage(UserValidator.REQUIREMENTS);
         }
         if (userRepository.existsByName(user.getName())) {
-            return new Response().setResult("Failure!").setMessage("This username is already taken.");
+            return new ServiceResponse().setResult("Failure!").setMessage("This username is already taken.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return new Response().setResult("Success!").setMessage("Registration was completed successfully.");
+        return new ServiceResponse().setResult("Success!").setMessage("Registration was completed successfully.");
     }
 }

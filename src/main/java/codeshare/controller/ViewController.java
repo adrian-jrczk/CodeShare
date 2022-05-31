@@ -2,7 +2,7 @@ package codeshare.controller;
 
 import codeshare.code.Code;
 import codeshare.service.AppService;
-import codeshare.service.Response;
+import codeshare.service.ServiceResponse;
 import codeshare.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,8 +34,8 @@ public class ViewController {
 
     @PostMapping("/post")
     private RedirectView postCode(@ModelAttribute Code code, Principal principal, RedirectAttributes attributes) {
-        Response response = service.saveCode(code, principal.getName());
-        attributes.addFlashAttribute("response", response);
+        ServiceResponse serviceResponse = service.saveCode(code, principal.getName());
+        attributes.addFlashAttribute("serviceResponse", serviceResponse);
         return new RedirectView("/post");
     }
 
@@ -47,16 +47,16 @@ public class ViewController {
 
     @PostMapping("/register")
     private RedirectView registerUser(@ModelAttribute User user, RedirectAttributes attributes) {
-        Response response = service.saveUser(user);
-        attributes.addFlashAttribute("response", response);
+        ServiceResponse serviceResponse = service.saveUser(user);
+        attributes.addFlashAttribute("serviceResponse", serviceResponse);
         return new RedirectView("/register");
     }
 
     @PostMapping("/update")
     private RedirectView updateCode(@ModelAttribute Code code, Principal principal, RedirectAttributes attributes) {
-        Response response = service.updateCode(code, principal.getName());
+        ServiceResponse serviceResponse = service.updateCode(code, principal.getName());
         attributes.addAttribute("uuid", code.getUuid());
-        attributes.addFlashAttribute("response", response);
+        attributes.addFlashAttribute("serviceResponse", serviceResponse);
         return new RedirectView("access");
     }
 
@@ -79,8 +79,8 @@ public class ViewController {
 
     @PostMapping("/delete")
     private RedirectView deleteCode(@RequestParam(name = "uuid") String uuid, Principal principal, RedirectAttributes attributes) {
-        Response response = service.deleteCode(uuid, principal.getName());
-        attributes.addFlashAttribute("response", response);
+        ServiceResponse serviceResponse = service.deleteCode(uuid, principal.getName());
+        attributes.addFlashAttribute("serviceResponse", serviceResponse);
         return new RedirectView("/my-code");
     }
 
@@ -96,12 +96,12 @@ public class ViewController {
 
     @GetMapping("/access")
     private String accessPage(@RequestParam(name = "uuid") String uuid, Model model, Principal principal) {
-        Response response = service.getCode(uuid, principal.getName());
-        if (response.getResult().equals("Failure!")) {
-            model.addAttribute("response", response);
+        ServiceResponse serviceResponse = service.getCode(uuid, principal.getName());
+        if (serviceResponse.getResult().equals("Failure!")) {
+            model.addAttribute("serviceResponse", serviceResponse);
             return "access-form";
         } else {
-            model.addAttribute("code", response.getCode());
+            model.addAttribute("code", serviceResponse.getCode());
             return "access";
         }
     }
