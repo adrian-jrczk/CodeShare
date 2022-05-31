@@ -1,4 +1,4 @@
-package codeshare.controller;
+package codeshare.service;
 
 import codeshare.code.Code;
 import codeshare.code.CodeRepository;
@@ -19,7 +19,7 @@ import java.util.*;
 
 
 @Service
-class AppService {
+public class AppService {
 
     @Autowired
     private CodeRepository codeRepository;
@@ -29,7 +29,7 @@ class AppService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    Response updateCode(Code code, String principalName) {
+    public Response updateCode(Code code, String principalName) {
         if (!CodeValidator.isValid(code)) {
             return new Response().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
         }
@@ -48,7 +48,7 @@ class AppService {
     }
 
     @Transactional
-    Response getCode(String uuid, String principalName) {
+    public Response getCode(String uuid, String principalName) {
         Optional<Code> databaseCode = codeRepository.findById(UUID.fromString(uuid));
         if (databaseCode.isEmpty()) {
             return new Response().setResult("Failure!").setMessage("Could not find code with given uuid");
@@ -76,13 +76,13 @@ class AppService {
     }
 
     @Transactional
-    Page<Code> getUserCodePaginated(int pageNum, int pageSize, String principalName) {
+    public Page<Code> getUserCodePaginated(int pageNum, int pageSize, String principalName) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         return codeRepository.findAllByCreatorName(principalName, pageable);
     }
 
     @Transactional
-    Map<String, String> getUserCodeList(String principalName) {
+    public Map<String, String> getUserCodeList(String principalName) {
         Map<String, String> uuidNamePairs = new HashMap<>();
         for (Code code : codeRepository.findAllByCreatorName(principalName)) {
             uuidNamePairs.put(code.getUuid().toString(), code.getName());
@@ -91,7 +91,7 @@ class AppService {
     }
 
     @Transactional
-    Response deleteCode(String uuid, String principalName) {
+    public Response deleteCode(String uuid, String principalName) {
         Optional<User> databaseUser = userRepository.findFirstByName(principalName);
         if (databaseUser.isEmpty()) {
             return new Response().setResult("Failure!").setMessage("Could not validate user sending request.");
@@ -107,7 +107,7 @@ class AppService {
     }
 
     @Transactional
-    Response saveCode(Code code, String principalName) {
+    public Response saveCode(Code code, String principalName) {
         if (!CodeValidator.isValid(code)) {
             return new Response().setResult("Failure!").setMessage(CodeValidator.REQUIREMENTS);
         }
@@ -133,7 +133,7 @@ class AppService {
     }
 
     @Transactional
-    Response saveUser(User user) {
+    public Response saveUser(User user) {
         if (!UserValidator.isValid(user)) {
             return new Response().setResult("Failure!").setMessage(UserValidator.REQUIREMENTS);
         }
