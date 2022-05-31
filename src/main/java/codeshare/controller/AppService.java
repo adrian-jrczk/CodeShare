@@ -41,7 +41,7 @@ class AppService {
         if (!modified.isEditable() && !modified.getCreator().getName().equals(principalName)) {
             return new Response().setResult("Failure!").setMessage("You cannot edit this code.");
         }
-        modified.setCode(code.getCode());
+        modified.setStringValue(code.getStringValue());
         modified.setLastModified(LocalDateTime.now());
         codeRepository.save(modified);
         return new Response().setResult("Success!").setMessage("This code was successfully updated.");

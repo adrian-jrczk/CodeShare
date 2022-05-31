@@ -11,7 +11,7 @@ function switchSyntaxSupport() {
 }
 
 function extractCodeFromEditor() {
-	document.getElementById('code').value = editor.getValue();
+	document.getElementById('stringValue').value = editor.getValue();
 	return true;
 }
 

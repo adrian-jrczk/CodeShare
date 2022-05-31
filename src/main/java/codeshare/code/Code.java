@@ -21,7 +21,7 @@ public class Code {
     private String uuid;
     private String name;
     @Lob
-    private String code;
+    private String stringValue;
     private boolean setAsPrivate;
     private boolean editable;
     private boolean viewRestricted;

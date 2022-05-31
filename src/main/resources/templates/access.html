@@ -65,7 +65,7 @@
 		
 		<div>
 			<div id="editor"></div>
-			<input type="hidden" id="code" th:field="*{code}">
+			<input type="hidden" id="stringValue" th:field="*{stringValue}">
 		</div>
 	</form>
 	
@@ -84,7 +84,7 @@
 		editor.setOptions({
 			maxLines: 10000
 		});
-		editor.session.setValue(document.getElementById('code').value);
+		editor.session.setValue(document.getElementById('stringValue').value);
 	</script>
 	<script src="/js/scripts.js"></script>
 </body>
