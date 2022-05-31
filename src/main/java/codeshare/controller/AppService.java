@@ -49,7 +49,7 @@ class AppService {
 
     @Transactional
     Response getCode(String uuid, String principalName) {
-        Optional<Code> databaseCode = codeRepository.findById(uuid);
+        Optional<Code> databaseCode = codeRepository.findById(UUID.fromString(uuid));
         if (databaseCode.isEmpty()) {
             return new Response().setResult("Failure!").setMessage("Could not find code with given uuid");
         }
@@ -85,7 +85,7 @@ class AppService {
     Map<String, String> getUserCodeList(String principalName) {
         Map<String, String> uuidNamePairs = new HashMap<>();
         for (Code code : codeRepository.findAllByCreatorName(principalName)) {
-            uuidNamePairs.put(code.getUuid(), code.getName());
+            uuidNamePairs.put(code.getUuid().toString(), code.getName());
         }
         return uuidNamePairs;
     }
@@ -97,7 +97,7 @@ class AppService {
             return new Response().setResult("Failure!").setMessage("Could not validate user sending request.");
         }
         User user = databaseUser.get();
-        Code code = codeRepository.getById(uuid);
+        Code code = codeRepository.getReferenceById(UUID.fromString(uuid));
         if (!code.getCreator().getName().equals(user.getName())) {
             return new Response().setResult("Failure!").setMessage("You are not allowed to delete this code.");
         }
@@ -126,17 +126,10 @@ class AppService {
         if (code.getMinutesAllowed() > 0) {
             code.setTimeRestricted(true);
         }
-        while (true) {
-            String uuid = UUID.randomUUID().toString();
-            if (!codeRepository.existsById(uuid)) {
-                code.setUuid(uuid);
-                break;
-            }
-        }
         codeRepository.save(code);
         return new Response().setResult("Success!")
                 .setMessage("Code was successfully posted. Generated uuid is:")
-                .setUuid(code.getUuid());
+                .setUuid(code.getUuid().toString());
     }
 
     @Transactional

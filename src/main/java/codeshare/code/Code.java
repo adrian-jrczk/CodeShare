@@ -8,17 +8,20 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
-@Entity
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Code {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "BINARY(16)", updatable = false, nullable = false, unique=true)
     @JsonIgnore
-    private String uuid;
+    private UUID uuid;
     private String name;
     @Lob
     private String stringValue;
