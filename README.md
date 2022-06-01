@@ -89,12 +89,16 @@ Every endpoint returns ServiceResponse object. Apart from `/api/register` every 
 	* Code code
 
 - Code
-	* String name
-	* String code
-	* boolean setAsPrivate
-	* boolean editable
-	* int viewsAllowed
-	* long minutesAllowed
+    * String name
+    * String stringValue
+    * boolean setAsPrivate
+    * boolean editable
+    * boolean viewRestricted
+    * int viewsAllowed
+    * boolean timeRestricted
+    * long minutesAllowed
+    * LocalDateTime createdAt
+    * LocalDateTime lastModified
 
 - User
 	* String name
