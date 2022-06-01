@@ -80,7 +80,7 @@ Every endpoint returns ServiceResponse object. Apart from `/api/register` every 
 	* Request parameters: none
 	* Request body: User
 
-#### Objects:
+#### API Objects:
 
 - ServiceResponse
 	* String result
