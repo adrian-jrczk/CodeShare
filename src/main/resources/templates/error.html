@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Error | CodeShare</title>
+	<link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="top-bar">
+		<a href="/" class="button b-big">HOME</a>
+		<a href="/my-code" class="button b-big">MY CODE</a>
+		<a href="/post" class="button b-big">POST</a>
+		<a href="/access-form" class="button b-big">ACCESS</a>
+	</div>
+	<div class="panel p-center-small text-only-container">
+		<h1>Something went wrong!</h1>
+		<div th:if="${statusCode != null}">
+			<p>ERROR CODE: <span th:text="${statusCode}"></span></p>
+		</div>
+		<div th:if="${message != null}">
+			<p>ERROR MESSAGE: <span th:text="${message}"></span></p>
+		</div>
+	</div>
+</body>
+
+</html>
